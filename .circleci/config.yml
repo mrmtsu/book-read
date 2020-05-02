@@ -1,0 +1,48 @@
+version: 2
+
+defaults: &defaults
+  working_directory: ~/src
+  docker:
+    - image: circleci/php:7.2-node-browsers
+    - image: circleci/mysql:5.7
+  enviroment:
+    - APP_DEBUG: true
+    - APP_ENV: testing
+    - APP_KEY: base64:ZX2VDYwETf7aO8yHpBYZMqGbQfoHvcK3WdwcZs94ZDI=
+    - DB_DATABASE: circle_test
+    - DB_USERNAME: root
+    - MYSQL_ALLOW_EMPTY_PASSWORD: true
+  
+jobs:
+  build:
+    <<: *defaults
+    steps:    
+      - checkout
+      - run:
+        name: install pdo_mysql
+        command: |
+          sudo apt update
+          sudo docker-php-ext-install pdo_mysql
+          sudo docker-php-ext-enable pdo_mysql
+      # Download and cache dependencies
+      - restore_cache:
+        keys:
+          - v1-dependencies-{{ checksum "composer.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+      - run: composer install -n --prefer-dist
+      - save_cache:
+        paths:
+          - ./vendor
+        key: v1-dependencies-{{ checksum "composer.json" }}
+      # run seeding
+      - run: php artisan migrate
+      - run: php artisan db:seed
+      # run test
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build
+
