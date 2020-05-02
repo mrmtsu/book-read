@@ -16,7 +16,7 @@ defaults: &defaults
 jobs:
   build:
     <<: *defaults
-    steps:    
+    step:    
       - checkout
       - run:
         name: install pdo_mysql
