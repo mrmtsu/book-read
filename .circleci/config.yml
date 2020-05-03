@@ -32,6 +32,6 @@ jobs: # ステップの集合
       #     paths:
       #       - node_modules
       - run: touch storage/testing.sqlite
-      - run: php artisan migrate
+      - run: php artisan migrate --force
       - run: ./vendor/bin/codecept build
       - run: ./vendor/bin/codecept run
