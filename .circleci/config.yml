@@ -10,7 +10,7 @@ jobs: # ステップの集合
       - checkout # ソースコードを作業ディレクトリにチェックアウトする特別なステップ
       - run: sudo apt install -y libsqlite3-dev zlib1g-dev
       - run: sudo docker-php-ext-install zip
-      # - run: sudo composer self-update
+      - run: sudo composer self-update
       # - restore_cache: # `composer.lock` が変更されていない場合に、依存関係キャッシュを復元する特別なステップ
       #     keys:
       #       - composer-v1-{{ checksum "composer.lock" }}
