@@ -5,12 +5,12 @@ jobs: # ステップの集合
     docker: # Docker でステップを実行します
 
       - image: circleci/php:7.2-node-browsers # このイメージをすべての `steps` が実行されるプライマリコンテナとして使用します
-    working_directory: ~/src # ステップが実行されるディレクトリ
+    working_directory: ../src # ステップが実行されるディレクトリ
     steps: # 実行可能コマンドの集合
       - checkout # ソースコードを作業ディレクトリにチェックアウトする特別なステップ
       - run: sudo apt install -y libsqlite3-dev zlib1g-dev
       - run: sudo docker-php-ext-install zip
-      - run: sudo composer self-update
+      # - run: sudo composer self-update
       # - restore_cache: # `composer.lock` が変更されていない場合に、依存関係キャッシュを復元する特別なステップ
       #     keys:
       #       - composer-v1-{{ checksum "composer.lock" }}
