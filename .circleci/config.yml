@@ -11,12 +11,12 @@ jobs: # ステップの集合
       - run: sudo apt install -y libsqlite3-dev zlib1g-dev
       - run: sudo docker-php-ext-install zip
       - run: sudo composer self-update
-      - restore_cache: # `composer.lock` が変更されていない場合に、依存関係キャッシュを復元する特別なステップ
-          keys:
-            - composer-v1-{{ checksum "composer.lock" }}
-            # 正確な一致が見つからない場合は、最新のキャッシュの使用にフォールバックします (https://circleci.com/docs/ja/2.0/caching/ を参照)
-            - composer-v1-
-      - run: composer install -n --prefer-dist
+      # - restore_cache: # `composer.lock` が変更されていない場合に、依存関係キャッシュを復元する特別なステップ
+      #     keys:
+      #       - composer-v1-{{ checksum "composer.lock" }}
+      #       # 正確な一致が見つからない場合は、最新のキャッシュの使用にフォールバックします (https://circleci.com/docs/ja/2.0/caching/ を参照)
+      #       - composer-v1-
+      # - run: composer install -n --prefer-dist
       # - save_cache: # `composer.lock` キャッシュキーテンプレートを使用して依存関係キャッシュを保存する特別なステップ
       #     key: composer-v1-{{ checksum "composer.lock" }}
       #     paths:
